@@ -25,6 +25,7 @@ export type CloseEvent = Events.CloseEvent;
 
 export type Options = {
     WebSocket?: any;
+    WebSocketOptions?: any;
     maxReconnectionDelay?: number;
     minReconnectionDelay?: number;
     reconnectionDelayGrowFactor?: number;
@@ -380,8 +381,8 @@ export default class ReconnectingWebSocket {
                 }
                 this._debug('connect', {url, protocols: this._protocols});
                 this._ws = this._protocols
-                    ? new WebSocket(url, this._protocols)
-                    : new WebSocket(url);
+                    ? new WebSocket(url, this._protocols, this._options.WebSocketOptions)
+                    : new WebSocket(url, [], this._options.WebSocketOptions);
                 this._ws!.binaryType = this._binaryType;
                 this._connectLock = false;
                 this._addListeners();
